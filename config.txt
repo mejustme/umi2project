@@ -1,0 +1,7 @@
+#/m/column/list
+#/m/column/create
+#/m/column/manage/draft
+#/m/column/manage/edit
+#/m/column/manage/topbar/info
+#/m/column/manage/topbar/list
+

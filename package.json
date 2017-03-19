@@ -1,0 +1,27 @@
+{
+  "name": "umi2project",
+  "version": "1.0.0",
+  "description": "根据迭代-UIM模块设计，自动根据netease nei上规范生成工程",
+  "main": "index.js",
+  "bin": {
+    "umi": "bin/umi2project.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mejustme/umi2project.git"
+  },
+  "keywords": [
+    "nei",
+    "umi",
+    "netease"
+  ],
+  "author": "mejustme",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mejustme/umi2project/issues"
+  },
+  "homepage": "https://github.com/mejustme/umi2project#readme"
+}

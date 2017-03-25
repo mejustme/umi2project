@@ -1,0 +1,44 @@
+{
+  "name": "root",
+  "children": [
+    {
+      "name": "column",
+      "children": [
+        {
+          "name": "list",
+          "children": []
+        },
+        {
+          "name": "create",
+          "children": []
+        },
+        {
+          "name": "manage",
+          "children": [
+            {
+              "name": "draft",
+              "children": []
+            },
+            {
+              "name": "edit",
+              "children": []
+            },
+            {
+              "name": "topbar",
+              "children": [
+                {
+                  "name": "info",
+                  "children": []
+                },
+                {
+                  "name": "list",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

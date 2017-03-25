@@ -83,8 +83,6 @@ var buildModule = function (obj) {
     });
 };
 
-
-
 readFile('./config.txt').then(function (data) {
     var tree = parse2Tree(data);
     var moduleName = tree.name;

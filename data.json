@@ -1,44 +1,126 @@
 {
-  "name": "root",
+  "name": "column",
   "children": [
     {
-      "name": "column",
+      "name": "list",
+      "children": [],
+      "uis": [
+        "ux-1",
+        "ux-2"
+      ]
+    },
+    {
+      "name": "create",
+      "children": [],
+      "uis": [
+        "ux-1",
+        "ux-2"
+      ]
+    },
+    {
+      "name": "manage",
+      "children": [
+        {
+          "name": "edit",
+          "children": [],
+          "uis": [
+            "ux-1",
+            "ux-2"
+          ]
+        },
+        {
+          "name": "topbar",
+          "children": [
+            {
+              "name": "info",
+              "children": [],
+              "uis": [
+                "ux-1",
+                "ux-2"
+              ]
+            },
+            {
+              "name": "list",
+              "children": [],
+              "uis": [
+                "ux-1",
+                "ux-2"
+              ]
+            },
+            {
+              "name": "draft",
+              "children": [],
+              "uis": [
+                "ux-1",
+                "ux-2"
+              ]
+            }
+          ],
+          "uis": [
+            "ux-1",
+            "ux-2"
+          ]
+        }
+      ],
+      "uis": []
+    },
+    {
+      "name": "admin",
       "children": [
         {
           "name": "list",
-          "children": []
+          "children": [],
+          "uis": [
+            "ux-1",
+            "ux-2"
+          ]
         },
         {
-          "name": "create",
-          "children": []
+          "name": "preview",
+          "children": [],
+          "uis": [
+            "ux-1",
+            "ux-2"
+          ]
         },
         {
-          "name": "manage",
+          "name": "unverify",
           "children": [
             {
-              "name": "draft",
-              "children": []
-            },
-            {
-              "name": "edit",
-              "children": []
-            },
-            {
-              "name": "topbar",
-              "children": [
-                {
-                  "name": "info",
-                  "children": []
-                },
-                {
-                  "name": "list",
-                  "children": []
-                }
+              "name": "column",
+              "children": [],
+              "uis": [
+                "ux-1",
+                "ux-2"
               ]
             }
-          ]
+          ],
+          "uis": []
+        },
+        {
+          "name": "verify",
+          "children": [
+            {
+              "name": "column",
+              "children": [],
+              "uis": [
+                "ux-1",
+                "ux-2"
+              ]
+            }
+          ],
+          "uis": []
         }
-      ]
+      ],
+      "uis": []
     }
-  ]
+  ],
+  "uis": [
+    "ux-a",
+    "ux-b",
+    "ux-c"
+  ],
+  "moduleName": "column",
+  "author": "hzchenqinhui@corp.netease.com",
+  "out": "module-column"
 }

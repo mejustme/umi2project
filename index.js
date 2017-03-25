@@ -14,45 +14,57 @@ var readFile = function (path) {
     })
 };
 
-// 解析文本UIM
+// 解析配置
 var parse2Tree = function (data) {
-    data = data.replace(/\n/g,'');
+    var parentName;
     var tree = {
             name: 'root',
             children: []
-        },
-        parentName;
-    var list = data.split('#');
+        };
+    if(!data.umi) return;
+    var list = Object.keys(data.umi);
     list.forEach(function (value) {
-        var items = value.split('/');
+        var items = value.replace(/#/g, '').split('/');
+        var uis = data.umi[value];
         parentName= 'root';
+        items = items.filter(function (value) {
+            if(value!=='') return true;
+        });
+        // console.log(items);
         for(var i=0; i<items.length; i++){
             if(!items[i] || items[i] === 'm') continue;
-            traverseBuild (tree, parentName, items[i]);
+            var newNode = {
+                name: items[i],
+                children:[],
+                uis: i==items.length-1? uis: []
+            };
+            traverseBuild (tree, parentName, newNode);
             parentName = items[i];
         }
     });
+    tree.children[0].moduleName = tree.children[0].name;
+    tree.children[0].author = data.author;
+    tree.children[0].out = 'module-' + tree.children[0].name;
+    tree.children[0].uis =  data.components || [];
+
     return  tree.children[0]; //返回真正的路径树
 };
 
 // 遍历树，找到父节点，如果孩子节点不存在，则插入孩子节点
-var traverseBuild = function (tree, parentName, name) {
+var traverseBuild = function (tree, parentName, newNode) {
     var i;
     if(tree.name == parentName){
         var exist = false;
         for(i=0; i<tree.children.length; i++){
-            if(tree.children[i].name ==  name) exist = true;
+            if(tree.children[i].name ==  newNode.name) exist = true;
         }
         if(!exist){
-            tree.children.push({
-                name: name,
-                children:[]
-            });
+            tree.children.push(newNode);
         }
         return true;
     }
     for(i=0; i<tree.children.length; i++){
-        if(traverseBuild(tree.children[i], parentName, name)) return true;
+        if(traverseBuild(tree.children[i], parentName, newNode)) return true;
     }
 };
 
@@ -62,8 +74,20 @@ var traverse = function (obj, callback) {
     callback(obj);
     for(var i=0; i<tempTree.children.length; i++){
         obj.tree = tempTree.children[i];
-        obj.path = tempPath + "/" + obj.tree.name;
+        obj.path = tempPath == "layout" ? obj.tree.name : (tempPath + '/' + obj.tree.name);
         traverse(obj, callback);
+    }
+};
+
+var build = function (obj) {
+    buildModule(obj);
+    for(var i=0; i<obj.uis.length; i++){
+        obj.uiName = /^ux-/.test(obj.uis[i])? obj.uis[i] : "ux-"+ obj.uis[i];
+        if(obj.moduleName == obj.tree.name){ // todo 可能一样 子的
+            buildModuleComponent(obj);
+        }else {
+            // buildComponent(obj);
+        }
     }
 };
 
@@ -71,29 +95,41 @@ var buildModule = function (obj) {
     var cmd = "nei build -sk 3c0776c04ad289211f2987f78737873c -module {moduleName} -name {path} -author {author} -o {out}".replace(/{(.+?)}/g, function ($0,$1) {
         return obj[$1];
     });
-
     console.log(cmd);
-    exec(cmd, function(error, stdout, stderr) {
-        if (error) {
-            console.error(error);
-            return;
-        }
-        console.log(stdout);
-        console.log(stderr);
-    });
+    var result = execSync(cmd);
+    // console.log(result.toString())
 };
 
-readFile('./config.txt').then(function (data) {
+var buildModuleComponent = function (obj) {
+    var cmd = "nei build -sk a55cd53d266bfcc60759ef842bb6ac96 -module {moduleName} -name {uiName} -author {author} -o {out}".replace(/{(.+?)}/g, function ($0,$1) {
+        return obj[$1];
+    });
+    console.log(cmd);
+    var result = execSync(cmd);
+    // console.log(result.toString())
+};
+
+var buildComponent = function (obj) {
+    var cmd = "nei build -sk 06df877b5c39bb823ea7d72b97c63ead -module {moduleName} -name {uiName} -author {author} -o {out}".replace(/{(.+?)}/g, function ($0,$1) {
+        return obj[$1];
+    });
+    console.log(cmd);
+    var result = execSync(cmd);
+    // console.log(result.toString())
+};
+
+readFile('./config.json').then(function (json) {
+    var data = JSON.parse(json);
     var tree = parse2Tree(data);
-    var moduleName = tree.name;
-    var out = 'module-'+moduleName;
-    fs.mkdirSync(out);
+    // console.log(JSON.stringify(tree));
+    fs.mkdirSync(tree.out);
     traverse({
         tree: tree,
-        moduleName: moduleName,
-        path: moduleName,
-        author: "hzchenqinhui@corp.netease.com",
-        out: out
-    },buildModule);
+        uis: tree.uis,
+        moduleName: tree.moduleName,
+        path: 'layout',
+        author: tree.author || "hzchenqinhui@corp.netease.com",
+        out: tree.out
+    },build);
 });
 

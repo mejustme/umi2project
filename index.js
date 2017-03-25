@@ -68,7 +68,7 @@ var traverse = function (obj, callback) {
 };
 
 var buildModule = function (obj) {
-    var cmd = "nei build -sk 3c0776c04ad289211f2987f78737873c -module {moduleName} -name {path} -author {author}".replace(/{(.+?)}/g, function ($0,$1) {
+    var cmd = "nei build -sk 3c0776c04ad289211f2987f78737873c -module {moduleName} -name {path} -author {author} -o {out}".replace(/{(.+?)}/g, function ($0,$1) {
         return obj[$1];
     });
 
@@ -86,11 +86,14 @@ var buildModule = function (obj) {
 readFile('./config.txt').then(function (data) {
     var tree = parse2Tree(data);
     var moduleName = tree.name;
+    var out = 'module-'+moduleName;
+    fs.mkdirSync(out);
     traverse({
         tree: tree,
         moduleName: moduleName,
         path: moduleName,
-        author: "hzchenqinhui@corp.netease.com"
+        author: "hzchenqinhui@corp.netease.com",
+        out: out
     },buildModule);
 });
 

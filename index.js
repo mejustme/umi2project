@@ -1,6 +1,5 @@
 var fs = require('fs');
 var fse = require('fs-extra');
-var exec = require('child_process').exec;
 var execSync = require('child_process').execSync;
 
 var readFile = function (path) {
@@ -89,10 +88,10 @@ var build = function (obj) {
         if(obj.moduleName == obj.tree.name && obj.isRoot){
             runNei("moduleComponent", obj);
         }else {
-            var dirpath = "module-"+obj.moduleName+"/src/"+obj.path+"/"+"component";
-            // console.log(dirpath);
-            fse.mkdirsSync(dirpath);
-            obj.cwd = dirpath;
+            var cwd = "module-"+obj.moduleName+"/src/"+obj.path+"/"+"component";
+            // console.log(cwd);
+            fse.mkdirsSync(cwd);
+            obj.cwd = cwd;
             runNei("component", obj);
         }
     }
@@ -107,11 +106,9 @@ var runNei = function (type, obj) {
         return obj[$1];
     });
     console.log(cmd);
-    var result = execSync(cmd,{
+    execSync(cmd,{
             cwd: obj.cwd
-        }
-    );
-    // console.log(result.toString())
+    });
 };
 
 readFile('./config.json').then(function (json) {

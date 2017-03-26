@@ -107,7 +107,7 @@ var runNei = function (type, obj) {
     });
     console.log(cmd);
     execSync(cmd,{
-            cwd: obj.cwd
+        cwd: obj.cwd
     });
 };
 

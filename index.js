@@ -75,15 +75,16 @@ var traverse = function (obj, callback) {
     for(var i=0; i<tempTree.children.length; i++){
         obj.tree = tempTree.children[i];
         obj.path = tempPath == "layout" ? obj.tree.name : (tempPath + '/' + obj.tree.name);
+        obj.isRoot =false;
         traverse(obj, callback);
     }
 };
 
 var build = function (obj) {
     buildModule(obj);
-    for(var i=0; i<obj.uis.length; i++){
-        obj.uiName = /^ux-/.test(obj.uis[i])? obj.uis[i] : "ux-"+ obj.uis[i];
-        if(obj.moduleName == obj.tree.name){ // todo 可能一样 子的
+    for(var i=0; i<obj.tree.uis.length; i++){
+        obj.uiName = /^ux-/.test(obj.tree.uis[i])? obj.tree.uis[i] : "ux-"+ obj.tree.uis[i];
+        if(obj.moduleName == obj.tree.name && obj.isRoot){
             buildModuleComponent(obj);
         }else {
             // buildComponent(obj);
@@ -125,11 +126,11 @@ readFile('./config.json').then(function (json) {
     fs.mkdirSync(tree.out);
     traverse({
         tree: tree,
-        uis: tree.uis,
         moduleName: tree.moduleName,
         path: 'layout',
         author: tree.author || "hzchenqinhui@corp.netease.com",
-        out: tree.out
+        out: tree.out,
+        isRoot: true
     },build);
 });
 

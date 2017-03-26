@@ -2,16 +2,16 @@
   "author": "hzchenqinhui@corp.netease.com",
   "components": ["ux-a","ux-b","ux-c"],
   "umi":{
-    "#/m/column/list": ["ux-1","ux-2"],
-    "#/m/column/create": ["ux-1","ux-2"],
-    "#/m/column/manage/edit": ["ux-1","ux-2"],
+    "#/m/column/list": ["ux-11","ux-22"],
+    "#/m/column/create": ["ux-13","ux-23"],
+    "#/m/column/manage/edit": ["ux-14","ux-24"],
     "#/m/column/manage/topbar": ["ux-1","ux-2"],
     "#/m/column/manage/topbar/info/": ["ux-1","ux-2"],
     "#/m/column/manage/topbar/list/": ["ux-1","ux-2"],
     "#/m/column/manage/topbar/draft/": ["ux-1","ux-2"],
     "#/m/column/admin/list/": ["ux-1","ux-2"],
-    "#/m/column/admin/preview/": ["ux-1","ux-2"],
+    "#/m/column/admin/preview/": ["ux-16","ux-26"],
     "#/m/column/admin/unverify/column": ["ux-1","ux-2"],
-    "#/m/column/admin/verify/column": ["ux-1","ux-2"]
+    "#/m/column/admin/verify/column": ["ux-17","ux-27"]
   }
 }

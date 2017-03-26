@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/mejustme/umi2project/issues"
   },
-  "homepage": "https://github.com/mejustme/umi2project#readme"
+  "homepage": "https://github.com/mejustme/umi2project#readme",
+  "dependencies": {
+    "fs-extra": "^2.1.2"
+  }
 }

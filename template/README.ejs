@@ -1,0 +1,48 @@
+# <%= moduleName %> 模块
+
+## 模块状态
+
+[![build status](https://g.hz.netease.com/edu-frontend/module-<%= moduleName %>/badges/master/build.svg)](https://g.hz.netease.com/edu-frontend/module-<%= moduleName %>/commits/master)
+
+--------
+
+## 目录
+- [模块设计](#模块设计)
+- [<%= moduleName %>-模块](#<%= moduleName %>-模块)
+<% function catalogItem(tree, indexFlag) { %>
+   -[<%= tree.umi %>](#<%= indexFlag %>-<%= tree.umi %>)：[时序图设计](./design<%=: tree.umi | toMdPath:moduleName %>design.md)
+    <%
+        for(var i=0; i<tree.children.length; i++){
+            catalogItem(tree.children[i], ''+indexFlag+(i+1))
+        }
+      }
+    %>
+<% catalogItem(tree,1) %>
+
+## 模块设计
+![Alt text](./arch/umi.png)
+
+---------
+
+## <%= moduleName %>-模块
+<% function moduleItem(tree, indexFlag) { %>
+<%=: indexFlag | toFontLevel %> <%= indexFlag %> <%= tree.umi %>
+|  字段     |     描述 |
+| -------- | -------- |
+| 模块UMI  | <%= tree.umi %> |
+| 模块别名  |  <%= moduleName %>-<%=: tree.umi | toAliasPath:moduleName  %> |
+| 时序图设计|  :secret: [时序图设计](./design<%=: tree.umi | toMdPath:moduleName %>design.md)|
+| 模块功能  | ![Alt text](./arch/f-<%=: tree.umi | toAliasPath:moduleName %>.png)|
+
+
+    <%
+        for(var i=0; i<tree.children.length; i++){
+            moduleItem(tree.children[i], indexFlag+'.'+(i+1))
+        }
+      }
+    %>
+<% moduleItem(tree,"1") %>
+
+
+
+

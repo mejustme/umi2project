@@ -1,6 +1,33 @@
 var fs = require('fs');
 var fse = require('fs-extra');
+var ejs = require('ejs');
 var execSync = require('child_process').execSync;
+ejs.filters.toMdPath = function (umi, moduleName) {
+    var path = umi.split(moduleName)[1];
+    if(path[path.length-1]!= '/'){
+        path = path + '/'
+    }
+    return path
+};
+
+ejs.filters.toAliasPath = function (umi, moduleName) {
+    var shotUmi = umi.split(moduleName)[1];
+    return shotUmi.split('/').filter(function (value) {
+        if(value!=='') return true;
+    }).join('-');
+};
+
+ejs.filters.toFunctionViewImg = function (umi, moduleName) {
+    var shotUmi = umi.split(moduleName)[1];
+    return shotUmi.split('/').filter(function (value) {
+            if(value!=='') return true;
+        }).join('-');
+};
+
+ejs.filters.toFontLevel = function (indexFlag) {
+    var long = 2 + (indexFlag.length-1)/2;
+    return  new Array(long+1).join("#");
+};
 
 var readFile = function (path) {
     return  new Promise(function (resolve, reject) {
@@ -31,12 +58,15 @@ var parse2Tree = function (data) {
             if(value!=='') return true;
         });
         // console.log(items);
+        var umi = '#';
         for(var i=0; i<items.length; i++){
-            if(!items[i] || items[i] === 'm') continue;
+            umi = umi +'/' +items[i];
+            if(items[i] === 'm') continue;
             var newNode = {
                 name: items[i],
                 children:[],
-                uis: i==items.length-1? uis: []
+                uis: i==items.length-1? uis: [],
+                umi: umi
             };
             traverseBuild (tree, parentName, newNode);
             parentName = items[i];
@@ -71,6 +101,9 @@ var traverseBuild = function (tree, parentName, newNode) {
 var traverse = function (obj, callback) {
     var tempTree = obj.tree;
     var tempPath = obj.path;
+    if(tempTree.children.length == 0 && tempTree.umi[tempTree.umi.length-1] != '/'){
+        tempTree.umi =  tempTree.umi  + '/'; // 叶子节点
+    }
     callback(obj);
     for(var i=0; i<tempTree.children.length; i++){
         obj.tree = tempTree.children[i];
@@ -111,12 +144,70 @@ var runNei = function (type, obj) {
     });
 };
 
+var buildDesign =  function (obj) {
+    if(obj.isRoot){
+        var root = "module-" + obj.moduleName;
+        fse.mkdirsSync(root + "/arch/design");
+        fse.mkdirsSync(root + "/design");
+        console.log("build " + root + "/arch/design");
+        console.log("build" + root + "/design");
+        return;
+    }
+    buildDesignItem(obj.tree.umi, obj.moduleName);
+
+};
+
+var buildDesignItem = function (umi, moduleName) {
+    var shotUmi = umi.split(moduleName)[1];
+    var mddir = "module-"+moduleName+"/design"+shotUmi;
+    if(mddir[mddir.length-1]!='/'){
+        mddir = mddir+ '/';
+    }
+    var imgName = shotUmi.split('/').filter(function (value) {
+        if(value!=='') return true;
+    }).join('-');
+
+    fse.mkdirsSync(mddir);
+    readFile('./template/design.ejs').then(function (template) {
+        var file = ejs.render(template, {
+            umi: umi,
+            imgName: imgName
+        });
+        var path = mddir+'design.md';
+
+        if(!fs.existsSync(path)){
+            console.log("build " + path);
+            fse.outputFileSync(path, file);
+        }else {
+            console.log("already exist "+path);
+        }
+
+    });
+};
+
+var buildReadme = function (tree, moduleName) {
+    readFile('./template/README.ejs').then(function (template) {
+        var file = ejs.render(template, {
+            tree: tree,
+            moduleName: moduleName
+        });
+        var root = "module-"+moduleName;
+        var path = root+'/README.md';
+        fse.outputFileSync(path, file);
+        console.log("build " + path);
+    })
+};
+
 readFile('./config.json').then(function (json) {
     var data = JSON.parse(json);
     var tree = parse2Tree(data);
     // console.log(JSON.stringify(tree));
-    fs.mkdirSync(tree.out);
-    traverse({
+    if(!fs.existsSync(tree.out)){
+        fs.mkdirSync(tree.out);
+    }
+
+    // make nei
+    var obj = {
         tree: tree,
         moduleName: tree.moduleName,
         path: 'layout',
@@ -126,6 +217,15 @@ readFile('./config.json').then(function (json) {
         module: "3c0776c04ad289211f2987f78737873c",
         moduleComponent: "a55cd53d266bfcc60759ef842bb6ac96",
         component: "06df877b5c39bb823ea7d72b97c63ead"
-    },build);
+    };
+    traverse(obj, build);
+
+    // make design.md
+    obj.tree = tree;
+    obj.isRoot= true;
+    traverse(obj, buildDesign);
+
+    // make readme.md
+    buildReadme(tree, tree.moduleName)
 });
 

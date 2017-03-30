@@ -5,17 +5,19 @@
       "name": "list",
       "children": [],
       "uis": [
-        "ux-1",
-        "ux-2"
-      ]
+        "ux-11",
+        "ux-22"
+      ],
+      "umi": "#/m/column/list"
     },
     {
       "name": "create",
       "children": [],
       "uis": [
-        "ux-1",
-        "ux-2"
-      ]
+        "ux-13",
+        "ux-23"
+      ],
+      "umi": "#/m/column/create"
     },
     {
       "name": "manage",
@@ -24,9 +26,10 @@
           "name": "edit",
           "children": [],
           "uis": [
-            "ux-1",
-            "ux-2"
-          ]
+            "ux-14",
+            "ux-24"
+          ],
+          "umi": "#/m/column/manage/edit"
         },
         {
           "name": "topbar",
@@ -37,7 +40,8 @@
               "uis": [
                 "ux-1",
                 "ux-2"
-              ]
+              ],
+              "umi": "#/m/column/manage/topbar/info"
             },
             {
               "name": "list",
@@ -45,7 +49,8 @@
               "uis": [
                 "ux-1",
                 "ux-2"
-              ]
+              ],
+              "umi": "#/m/column/manage/topbar/list"
             },
             {
               "name": "draft",
@@ -53,16 +58,19 @@
               "uis": [
                 "ux-1",
                 "ux-2"
-              ]
+              ],
+              "umi": "#/m/column/manage/topbar/draft"
             }
           ],
           "uis": [
             "ux-1",
             "ux-2"
-          ]
+          ],
+          "umi": "#/m/column/manage/topbar"
         }
       ],
-      "uis": []
+      "uis": [],
+      "umi": "#/m/column/manage"
     },
     {
       "name": "admin",
@@ -73,15 +81,17 @@
           "uis": [
             "ux-1",
             "ux-2"
-          ]
+          ],
+          "umi": "#/m/column/admin/list"
         },
         {
           "name": "preview",
           "children": [],
           "uis": [
-            "ux-1",
-            "ux-2"
-          ]
+            "ux-16",
+            "ux-26"
+          ],
+          "umi": "#/m/column/admin/preview"
         },
         {
           "name": "unverify",
@@ -92,10 +102,12 @@
               "uis": [
                 "ux-1",
                 "ux-2"
-              ]
+              ],
+              "umi": "#/m/column/admin/unverify/column"
             }
           ],
-          "uis": []
+          "uis": [],
+          "umi": "#/m/column/admin/unverify"
         },
         {
           "name": "verify",
@@ -104,15 +116,18 @@
               "name": "column",
               "children": [],
               "uis": [
-                "ux-1",
-                "ux-2"
-              ]
+                "ux-17",
+                "ux-27"
+              ],
+              "umi": "#/m/column/admin/verify/column"
             }
           ],
-          "uis": []
+          "uis": [],
+          "umi": "#/m/column/admin/verify"
         }
       ],
-      "uis": []
+      "uis": [],
+      "umi": "#/m/column/admin"
     }
   ],
   "uis": [
@@ -120,6 +135,7 @@
     "ux-b",
     "ux-c"
   ],
+  "umi": "#/m/column",
   "moduleName": "column",
   "author": "hzchenqinhui@corp.netease.com",
   "out": "module-column"

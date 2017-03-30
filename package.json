@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/mejustme/umi2project#readme",
   "dependencies": {
+    "ejs": "git+https://github.com/tj/ejs.git",
     "fs-extra": "^2.1.2"
   }
 }

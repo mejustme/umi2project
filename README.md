@@ -18,7 +18,6 @@
 
 ```
 npm install umi2project -g
-
 ```
 
 2. 创建一份配置文件 config.json
@@ -41,14 +40,12 @@ npm install umi2project -g
     "#/m/column/admin/verify/column/": ["ux-13","ux-14"]
   }
 }
-
 ```
 
 3. 一键构建
 
 ```
 umi2project
-
 ```
 
 4、 替换图片
@@ -56,5 +53,5 @@ umi2project
 - 迭代负责人： 复制design/umi.md中文本到下面地址，截取UMI模块设计，命名umi.png 到arch/design/目录
 [网易教育内部](http://cppl.front.com/#/sequence) 或者
 [其他](http://knsv.github.io/mermaid/live_editor/)
-- 迭代负责人： 添加模块功能图f-a-b.png 到arch/目录
-- 其他开发人员： 参考时序图demo, 设计模块时序图后，添加具体模块时序图a-b.png 到arch/design/目录
+- 迭代负责人： 添加模块功能图f-xx-xx.png 到arch/目录
+- 其他开发人员： 参考时序图demo, 设计模块时序图后，添加具体模块时序图xx-xx.png 到arch/design/目录

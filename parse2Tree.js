@@ -1,3 +1,4 @@
+
 // 遍历树，找到父节点，如果孩子节点不存在，则插入孩子节点
 var traverseBuild = function (tree, parentName, newNode) {
     var i;
@@ -52,7 +53,8 @@ var parse2Tree = function (data) {
     tree.children[0].out = 'module-' + tree.children[0].name;
     tree.children[0].uis =  data.components || [];
 
-    return  tree.children[0]; //返回真正的路径树
+    //返回真正的路径树
+    return  tree.children[0];
 };
 
 return module.exports = parse2Tree;

@@ -181,7 +181,6 @@ var buildDesignItem = function (umi, moduleName) {
         }else {
             console.log("already exist "+path);
         }
-
     });
 };
 

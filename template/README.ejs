@@ -9,15 +9,19 @@
 ## 目录
 - [模块设计](#模块设计)
 - [<%= moduleName %>-模块](#<%= moduleName %>-模块)
-<% function catalogItem(tree, indexFlag) { %>
+<% function catalogItem(tree, indexFlag) {
+    if(indexFlag != 'root'){
+%>
    -[<%= tree.umi %>](#<%= indexFlag %>-<%= tree.umi %>)：[时序图设计](./design<%=: tree.umi | toMdPath:moduleName %>design.md)
-    <%
+<%
+    }
+        indexFlag = (indexFlag == 'root'? '': indexFlag);
         for(var i=0; i<tree.children.length; i++){
             catalogItem(tree.children[i], ''+indexFlag+(i+1))
         }
-      }
-    %>
-<% catalogItem(tree,1) %>
+    }
+%>
+<% catalogItem(tree,'root') %>
 
 ## 模块设计
 ![Alt text](./arch/umi.png)
@@ -25,7 +29,9 @@
 ---------
 
 ## <%= moduleName %>-模块
-<% function moduleItem(tree, indexFlag) { %>
+<% function moduleItem(tree, indexFlag) {
+    if(indexFlag != 'root'){
+%>
 <%=: indexFlag | toFontLevel %> <%= indexFlag %> <%= tree.umi %>
 |  字段     |     描述 |
 | -------- | -------- |
@@ -36,11 +42,14 @@
 
 
 <%
+    }
+
     for(var i=0; i<tree.children.length; i++){
-            moduleItem(tree.children[i], indexFlag+'.'+(i+1))
+        nextFlag = (indexFlag == 'root'? ''+(i+1): indexFlag+'.'+(i+1));
+        moduleItem(tree.children[i], nextFlag)
     }
 }
 %>
-<% moduleItem(tree,"1") %>
+<% moduleItem(tree,"root") %>
 
 

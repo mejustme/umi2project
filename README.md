@@ -63,4 +63,11 @@ umi2project
 
 
 ### tips:
-- 如果需要在已有模块中新增模块，仍然可以运行umi2project，不会覆盖所有已经存在的文件,`除了：README.md && config.js`
+- 如果需要在已有模块中新增模块或者UI，仍然可以运行umi2project来快速实现，不会覆盖所有已经存在的文件,`除了：README.md && config.js`
+
+### 效果图
+![Alt text](./arch/readme1.png)
+![Alt text](./arch/readme2.png)
+![Alt text](./arch/readme3.png)
+![Alt text](./arch/catalog.png)
+![Alt text](./arch/config.png)

@@ -18,13 +18,13 @@
 
 ### 你需要做什么
 
-1. 安装
+1、 安装
 
 ```
 npm install umi2project -g
 ```
 
-2. 创建一份配置文件 config.json
+2、 创建一份配置文件 config.json
 
 ```
 {
@@ -46,7 +46,7 @@ npm install umi2project -g
 }
 ```
 
-3. 一键构建
+3、 一键构建
 
 ```
 umi2project

@@ -48,4 +48,8 @@ ejs.filters.jump = function (umi) {
     return umi.split("#")[1].split("/").join("")
 }
 
+ejs.filters.toBlank = function (indexFlag) {
+    return new Array(indexFlag.length).join("   ")+'    ';
+}
+
 return exports;

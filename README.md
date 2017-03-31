@@ -69,7 +69,7 @@ umi2project
 #### 如上配置,得到的工程：[传送门](https://g.hz.netease.com/hzchenqinhui/module-column/tree/master)
 
 --------
-![Alt text](http://edu-image.nosdn.127.net/DAA135DC0970697C4D3B07432F0C5710.png?imageView&thumbnail=900x0)
+![Alt text](http://edu-image.nosdn.127.net/44DBE02A54A7F3B224BE51A8592623CF.png?imageView&thumbnail=900x0)
 ![Alt text](http://edu-image.nosdn.127.net/0CD8810C5AA0002764B2DAD376273B16.png?imageView&thumbnail=900x0)
 --------
 ![Alt text](http://edu-image.nosdn.127.net/2DCE3C0CC1E78644205076D8371A92E0.png?imageView&thumbnail=700x0)

@@ -4,7 +4,7 @@
   "description": "根据迭代-UIM模块设计，自动根据netease nei上规范生成工程",
   "main": "index.js",
   "bin": {
-    "umi": "bin/umi2project.js"
+    "umi2project": "bin/umi2project.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

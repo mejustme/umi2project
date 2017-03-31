@@ -66,7 +66,9 @@ umi2project
 - 如果需要在已有模块中新增模块或者UI，仍然可以运行umi2project来快速实现，不会覆盖所有已经存在的文件,`除了：README.md && config.js`
 
 ### 效果图
-如上配置,得到的工程：[传送门](https://g.hz.netease.com/hzchenqinhui/module-column/tree/master)
+#### 如上配置,得到的工程：[传送门](https://g.hz.netease.com/hzchenqinhui/module-column/tree/master)
+
+--------
 ![Alt text](http://edu-image.nosdn.127.net/DAA135DC0970697C4D3B07432F0C5710.png?imageView&thumbnail=900x0)
 ![Alt text](http://edu-image.nosdn.127.net/0CD8810C5AA0002764B2DAD376273B16.png?imageView&thumbnail=900x0)
 --------

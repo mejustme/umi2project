@@ -90,11 +90,11 @@ var buildDesign =  function (obj) {
         var root = "module-" + obj.moduleName;
         fse.mkdirsSync(root + "/arch/design");
         fse.mkdirsSync(root + "/design");
-        if(!fs.existsSync(root + '/arch/umi.png')){
-            fse.copySync(nodePath.resolve(__dirname,'./template/umi.png'), root + '/arch/umi.png');
-            console.log("build " + root + "/arch/umi.png");
+        if(!fs.existsSync(root + '/arch/design/umi.png')){
+            fse.copySync(nodePath.resolve(__dirname,'./template/umi.png'), root + '/arch/design/umi.png');
+            console.log("build " + root + "/arch/design/umi.png");
         }else {
-            console.log("already exist "+ root + "/arch/umi.png");
+            console.log("already exist "+ root + "/arch/design/umi.png");
         }
         console.log("build " + root + "/arch/design");
         console.log("build " + root + "/design");

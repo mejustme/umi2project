@@ -70,8 +70,8 @@ umi2project
 
 --------
 ![Alt text](http://edu-image.nosdn.127.net/44DBE02A54A7F3B224BE51A8592623CF.png?imageView&thumbnail=600x0)
-![Alt text](http://edu-image.nosdn.127.net/0CD8810C5AA0002764B2DAD376273B16.png?imageView&thumbnail=900x0)
+![Alt text](http://edu-image.nosdn.127.net/0CD8810C5AA0002764B2DAD376273B16.png?imageView&thumbnail=750x0)
 --------
-![Alt text](http://edu-image.nosdn.127.net/2DCE3C0CC1E78644205076D8371A92E0.png?imageView&thumbnail=700x0)
+![Alt text](http://edu-image.nosdn.127.net/2DCE3C0CC1E78644205076D8371A92E0.png?imageView&thumbnail=600x0)
 --------
 ![Alt text](http://edu-image.nosdn.127.net/E9DE3E5EA3E2BCEF2EEE930A9088632A.png?imageView&thumbnail=200x0)

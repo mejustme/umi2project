@@ -3,7 +3,8 @@ var fse = require('fs-extra');
 var ejs = require('ejs');
 var execSync = require('child_process').execSync;
 ejs.filters.toMdPath = function (umi, moduleName) {
-    var path = umi.split(moduleName)[1];
+    // var path = umi.split(moduleName)[1];  fix childe module same name
+    var path = umi.match(new RegExp(moduleName+'(.+)$'))[1];
     if(path[path.length-1]!= '/'){
         path = path + '/'
     }
@@ -11,14 +12,14 @@ ejs.filters.toMdPath = function (umi, moduleName) {
 };
 
 ejs.filters.toAliasPath = function (umi, moduleName) {
-    var shotUmi = umi.split(moduleName)[1];
+    var shotUmi = umi.match(new RegExp(moduleName+'(.+)$'))[1];
     return shotUmi.split('/').filter(function (value) {
         if(value!=='') return true;
     }).join('-');
 };
 
 ejs.filters.toFunctionViewImg = function (umi, moduleName) {
-    var shotUmi = umi.split(moduleName)[1];
+    var shotUmi = umi.match(new RegExp(moduleName+'(.+)$'))[1];
     return shotUmi.split('/').filter(function (value) {
             if(value!=='') return true;
         }).join('-');
@@ -101,7 +102,7 @@ var traverseBuild = function (tree, parentName, newNode) {
 var traverse = function (obj, callback) {
     var tempTree = obj.tree;
     var tempPath = obj.path;
-    if(tempTree.children.length == 0 && tempTree.umi[tempTree.umi.length-1] != '/'){
+    if(tempTree.children.length === 0 && tempTree.umi[tempTree.umi.length-1] != '/'){
         tempTree.umi =  tempTree.umi  + '/'; // 叶子节点
     }
     callback(obj);
@@ -150,7 +151,7 @@ var buildDesign =  function (obj) {
         fse.mkdirsSync(root + "/arch/design");
         fse.mkdirsSync(root + "/design");
         console.log("build " + root + "/arch/design");
-        console.log("build" + root + "/design");
+        console.log("build " + root + "/design");
         return;
     }
     buildDesignItem(obj.tree.umi, obj.moduleName);
@@ -158,7 +159,7 @@ var buildDesign =  function (obj) {
 };
 
 var buildDesignItem = function (umi, moduleName) {
-    var shotUmi = umi.split(moduleName)[1]; // 此时 可能 模块名称和全局模块一样名称 todo
+    var shotUmi = umi.match(new RegExp(moduleName+'(.+)$'))[1];
     var mddir = "module-"+moduleName+"/design"+shotUmi;
     if(mddir[mddir.length-1]!='/'){
         mddir = mddir+ '/';

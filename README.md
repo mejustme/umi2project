@@ -21,7 +21,7 @@
 1、 安装
 
 ```
-npm install umi2project -g
+npm install umi2project -g -d
 ```
 
 2、 创建一份配置文件 config.json

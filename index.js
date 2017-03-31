@@ -158,7 +158,7 @@ var buildDesign =  function (obj) {
 };
 
 var buildDesignItem = function (umi, moduleName) {
-    var shotUmi = umi.split(moduleName)[1];
+    var shotUmi = umi.split(moduleName)[1]; // 此时 可能 模块名称和全局模块一样名称 todo
     var mddir = "module-"+moduleName+"/design"+shotUmi;
     if(mddir[mddir.length-1]!='/'){
         mddir = mddir+ '/';

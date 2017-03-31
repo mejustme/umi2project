@@ -35,14 +35,12 @@
 | 模块功能  | ![Alt text](./arch/f-<%=: tree.umi | toAliasPath:moduleName %>.png)|
 
 
-    <%
-        for(var i=0; i<tree.children.length; i++){
+<%
+    for(var i=0; i<tree.children.length; i++){
             moduleItem(tree.children[i], indexFlag+'.'+(i+1))
-        }
-      }
-    %>
+    }
+}
+%>
 <% moduleItem(tree,"1") %>
-
-
 
 

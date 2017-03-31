@@ -1,0 +1,43 @@
+/**
+ * 模块组装配置文件
+ *
+ * @version  1.0
+ * @author   <%= author %> <<%= author %>>
+ */
+<% var umi404 = tree.children.length == 0? tree.umi : tree.children[0].umi -%>
+<%# 生成alias递归函数 -%>
+<% function buildAliasItem(tree) {
+%>
+                "<%= moduleName? moduleName : moduleName+'-' %><%=: tree.umi | toAliasPath:moduleName %>": "<%=: tree.umi | toPureUMI -%>",
+<%
+    for(var i=0; i<tree.children.length; i++){
+        buildAliasItem(tree.children[i])
+    }
+}
+%>
+<%# 生成module递归函数 -%>
+<% function buildModuleItem(tree) {
+%>
+            "<%=: tree.umi | toPureUMI -%>":  "<%=: tree.umi | toModuleHtml:moduleName -%>",
+<%
+    for(var i=0; i<tree.children.length; i++){
+        buildModuleItem(tree.children[i])
+    }
+}
+%>
+NEJ.define(function () {
+    return {
+        rules: {
+            rewrite: {
+                404: '<%=: umi404 | toPureUMI %>'
+            },
+            alias: {
+                <% buildAliasItem(tree) %>
+            }
+        },
+        modules: {
+            <% buildModuleItem(tree) %>
+        }
+    };
+});
+

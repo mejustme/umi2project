@@ -4,22 +4,23 @@ var ejs = require('ejs');
 var execSync = require('child_process').execSync;
 ejs.filters.toMdPath = function (umi, moduleName) {
     // var path = umi.split(moduleName)[1];  fix childe module same name
-    var path = umi.match(new RegExp(moduleName+'(.+)$'))[1];
+    var path = umi.match(new RegExp(moduleName+'(.*)$'))[1];
     if(path[path.length-1]!= '/'){
         path = path + '/'
     }
     return path
 };
 
-ejs.filters.toAliasPath = function (umi, moduleName) {
-    var shotUmi = umi.match(new RegExp(moduleName+'(.+)$'))[1];
-    return shotUmi.split('/').filter(function (value) {
+ejs.filters.toAliasPath = function (umi, moduleName, isall) {
+    var shotUmi = umi.match(new RegExp(moduleName+'(.*)$'))[1];
+    var alias = shotUmi.split('/').filter(function (value) {
         if(value!=='') return true;
     }).join('-');
+    return alias;
 };
 
 ejs.filters.toFunctionViewImg = function (umi, moduleName) {
-    var shotUmi = umi.match(new RegExp(moduleName+'(.+)$'))[1];
+    var shotUmi = umi.match(new RegExp(moduleName+'(.*)$'))[1];
     return shotUmi.split('/').filter(function (value) {
             if(value!=='') return true;
         }).join('-');
@@ -29,6 +30,22 @@ ejs.filters.toFontLevel = function (indexFlag) {
     var long = 2 + (indexFlag.length-1)/2;
     return  new Array(long+1).join("#");
 };
+
+ejs.filters.toPureUMI = function (umi) {
+    return umi.split('#')[1];
+}
+
+ejs.filters.toModuleHtml = function (umi, moduleName) {
+    var path = umi.match(new RegExp(moduleName+'(.*)$'))[1];
+    if(path === '/' || path === ''){  // for root
+        path = '/layout/'
+    }
+    if(path[path.length-1]!= '/'){
+        path = path + '/'
+    }
+    return 'module-' + moduleName + '/src' + path + 'index.html';
+}
+
 
 var readFile = function (path) {
     return  new Promise(function (resolve, reject) {
@@ -165,7 +182,7 @@ var buildDesign =  function (obj) {
 };
 
 var buildDesignItem = function (umi, moduleName) {
-    var shotUmi = umi.match(new RegExp(moduleName+'(.+)$'))[1];
+    var shotUmi = umi.match(new RegExp(moduleName+'(.*)$'))[1];
     var mddir = "module-"+moduleName+"/design"+shotUmi;
     if(mddir[mddir.length-1]!='/'){
         mddir = mddir+ '/';
@@ -209,28 +226,44 @@ var buildDesignItem = function (umi, moduleName) {
     });
 };
 
-var buildReadme = function (tree, moduleName) {
+var buildReadme = function (tree) {
     readFile('./template/README.ejs').then(function (template) {
         var file = ejs.render(template, {
             tree: tree,
-            moduleName: moduleName
+            moduleName: tree.moduleName
         });
-        var root = "module-"+moduleName;
-        var path = root+'/README.md';
+        var path =  tree.out +'/README.md';
         fse.outputFileSync(path, file);
         console.log("build " + path);
     })
 };
 
+var buildUMI = function (tree) {
+
+}
+
+var buildModuleConfig = function (tree) {
+    readFile('./template/config.ejs').then(function (template) {
+        var file = ejs.render(template, {
+            tree: tree,
+            author: tree.author,
+            moduleName: tree.moduleName
+        });
+        file = file.replace(/,(?=\s*\r?\n\s*})/g,'');
+        var path = tree.out + '/src/config.js';
+        fse.outputFileSync(path, file);
+
+        console.log("build " + path);
+    })
+}
+
 readFile('./config.json').then(function (json) {
     var data = JSON.parse(json);
     var tree = parse2Tree(data);
-    // console.log(JSON.stringify(tree));
     if(!fs.existsSync(tree.out)){
         fs.mkdirSync(tree.out);
     }
 
-    // make nei
     var obj = {
         tree: tree,
         moduleName: tree.moduleName,
@@ -242,7 +275,11 @@ readFile('./config.json').then(function (json) {
         moduleComponent: "a55cd53d266bfcc60759ef842bb6ac96",
         component: "06df877b5c39bb823ea7d72b97c63ead"
     };
+    tree.author= obj.author;
+
+    // build project with nei
     traverse(obj, build);
+    // console.log(JSON.stringify(tree));
 
     // make design.md
     obj.tree = tree;
@@ -250,6 +287,13 @@ readFile('./config.json').then(function (json) {
     traverse(obj, buildDesign);
 
     // make readme.md
-    buildReadme(tree, tree.moduleName)
+    buildReadme(tree);
+
+    // make umi.md for auto get umi image
+    // rule: http://knsv.github.io/mermaid/#installation
+    buildUMI(tree)
+
+    // build module config for auto run all module
+    buildModuleConfig(tree)
 });
 

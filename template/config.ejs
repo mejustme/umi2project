@@ -6,12 +6,12 @@
  */
 <% var umi404 = tree.children.length == 0? tree.umi : tree.children[0].umi -%>
 <%# 生成alias递归函数 -%>
-<% function buildAliasItem(tree) {
+<% function buildAliasItem(tree, isRoot) {
 %>
-                "<%= moduleName? moduleName : moduleName+'-' %><%=: tree.umi | toAliasPath:moduleName %>": "<%=: tree.umi | toPureUMI -%>",
+                "<%= isRoot? moduleName : moduleName+'-' %><%=: tree.umi | toAliasPath:moduleName %>": "<%=: tree.umi | toPureUMI -%>",
 <%
     for(var i=0; i<tree.children.length; i++){
-        buildAliasItem(tree.children[i])
+        buildAliasItem(tree.children[i], false)
     }
 }
 %>
@@ -32,7 +32,7 @@ NEJ.define(function () {
                 404: '<%=: umi404 | toPureUMI %>'
             },
             alias: {
-                <% buildAliasItem(tree) %>
+                <% buildAliasItem(tree, true) %>
             }
         },
         modules: {

@@ -61,3 +61,6 @@ umi2project
 - 其他开发人员： 参考时序图demo, 设计模块时序图后，添加具体模块时序图xx-xx.png 到arch/design/目录
 
 
+
+### tips:
+- 如果需要在已有模块中新增模块，仍然可以运行umi2project，不会覆盖所有已经存在的文件,`除了：README.md && config.js`

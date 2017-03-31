@@ -11,6 +11,10 @@
 - 构建所有模块设计图、时序图的命名
 - 构建UMI图  // todo
 
+### 优势
+- 节省半天时间
+- 避免让各个模块跑起来，路由配置过程中可能产生的错误
+- 规范迭代工程
 
 ### 你需要做什么
 
@@ -48,10 +52,12 @@ npm install umi2project -g
 umi2project
 ```
 
-4、 替换图片
+5、 替换图片
 
 - 迭代负责人： 复制design/umi.md中文本到下面地址，截取UMI模块设计，命名umi.png 到arch/design/目录
 [网易教育内部](http://cppl.front.com/#/sequence) 或者
 [其他](http://knsv.github.io/mermaid/live_editor/)
 - 迭代负责人： 添加模块功能图f-xx-xx.png 到arch/目录
 - 其他开发人员： 参考时序图demo, 设计模块时序图后，添加具体模块时序图xx-xx.png 到arch/design/目录
+
+

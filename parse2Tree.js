@@ -50,7 +50,7 @@ var parse2Tree = function (data) {
     });
     tree.children[0].moduleName = tree.children[0].name;
     tree.children[0].author = data.author;
-    tree.children[0].out = 'module-' + tree.children[0].name;
+    tree.children[0].out = 'module-' + tree.children[0].name
     tree.children[0].uis =  data.components || [];
 
     //返回真正的路径树

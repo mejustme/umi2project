@@ -18,6 +18,8 @@ participant listComponent as component-list
 participant itemComponent as component-item
 participant itemComponent as cache-column
 
+-----
+
 # 获取列表
 user ->> listModule: _onRefresh
 listModule ->> listComponent: init

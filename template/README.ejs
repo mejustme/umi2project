@@ -12,7 +12,7 @@
 <% function catalogItem(tree, indexFlag) {
     if(indexFlag != 'root'){
 %>
-   -[<%= tree.umi %>](#<%= indexFlag %>-<%= tree.umi %>)：[时序图设计](./design<%=: tree.umi | toMdPath:moduleName %>design.md)
+   - [<%= tree.umi %>](#<%= indexFlag %>-<%=: tree.umi | jump %>)：[时序图设计](./design<%=: tree.umi | toMdPath:moduleName %>design.md)
 <%
     }
         indexFlag = (indexFlag == 'root'? '': indexFlag);

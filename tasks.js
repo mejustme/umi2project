@@ -1,4 +1,5 @@
 var fs = require('fs');
+var nodePath = require('path');
 var fse = require('fs-extra');
 var ejs = require('ejs');
 var execSync = require('child_process').execSync;
@@ -48,7 +49,7 @@ var buildDesignItem = function (umi, moduleName) {
     }).join('-');
 
     fse.mkdirsSync(mddir);
-    readFile('./template/design.ejs').then(function (template) {
+    readFile(nodePath.resolve(__dirname, './template/design.ejs')).then(function (template) {
         var file = ejs.render(template, {
             umi: umi,
             imgName: imgName
@@ -66,7 +67,7 @@ var buildDesignItem = function (umi, moduleName) {
         var moduleDesignImg = "module-"+ moduleName+ '/arch/design/' + imgName+  '.png';
         if(!fs.existsSync(moduleDesignImg)){
             console.log("build " + moduleDesignImg);
-            fse.copySync('./template/a-b.png', moduleDesignImg);
+            fse.copySync(nodePath.resolve(__dirname,'./template/a-b.png'), moduleDesignImg);
         }else {
             console.log("already exist " + moduleDesignImg);
         }
@@ -75,7 +76,7 @@ var buildDesignItem = function (umi, moduleName) {
         var moduleFuntionImg = "module-"+ moduleName+ '/arch/f-' + imgName+  '.png';
         if(!fs.existsSync(moduleFuntionImg)){
             console.log("build " + moduleFuntionImg);
-            fse.copySync('./template/f-a-b.png', moduleFuntionImg);
+            fse.copySync(nodePath.resolve(__dirname,'./template/f-a-b.png'), moduleFuntionImg);
         }else {
             console.log("already exist " + moduleFuntionImg);
         }
@@ -90,7 +91,7 @@ var buildDesign =  function (obj) {
         fse.mkdirsSync(root + "/arch/design");
         fse.mkdirsSync(root + "/design");
         if(!fs.existsSync(root + '/arch/umi.png')){
-            fse.copySync('./template/umi.png', root + '/arch/umi.png');
+            fse.copySync(nodePath.resolve(__dirname,'./template/umi.png'), root + '/arch/umi.png');
             console.log("build " + root + "/arch/umi.png");
         }else {
             console.log("already exist "+ root + "/arch/umi.png");
@@ -105,7 +106,7 @@ var buildDesign =  function (obj) {
 
 // build readme
 var buildReadme = function (tree) {
-    readFile('./template/README.ejs').then(function (template) {
+    readFile(nodePath.resolve(__dirname,'./template/README.ejs')).then(function (template) {
         var file = ejs.render(template, {
             tree: tree,
             moduleName: tree.moduleName
@@ -119,7 +120,7 @@ var buildReadme = function (tree) {
 
 // build module config
 var buildModuleConfig = function (tree) {
-    readFile('./template/config.ejs').then(function (template) {
+    readFile(nodePath.resolve(__dirname,'./template/config.ejs')).then(function (template) {
         var file = ejs.render(template, {
             tree: tree,
             author: tree.author,

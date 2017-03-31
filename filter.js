@@ -44,4 +44,8 @@ ejs.filters.toModuleHtml = function (umi, moduleName) {
     return 'module-' + moduleName + '/src' + path + 'index.html';
 }
 
+ejs.filters.jump = function (umi) {
+    return umi.split("#")[1].split("/").join("")
+}
+
 return exports;

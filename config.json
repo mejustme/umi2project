@@ -12,6 +12,6 @@
     "#/m/column/admin/list/": ["ux-1","ux-2"],
     "#/m/column/admin/preview/": ["ux-16","ux-26"],
     "#/m/column/admin/unverify/column/": ["ux-1","ux-2"],
-    "#/m/column/admin/verify/column/": ["ux-17","ux-27"]
+    "#/m/column/admin/verify/column/": ["ux-28","ux-30"]
   }
 }

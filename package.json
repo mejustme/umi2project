@@ -1,7 +1,7 @@
 {
   "name": "umi2project",
   "version": "1.0.0",
-  "description": "根据迭代-UIM模块设计，自动根据netease nei上规范生成工程",
+  "description": "根据迭代-UIM的模块设计，以及netease nei规范自动生成完整的工程",
   "main": "index.js",
   "bin": {
     "umi2project": "bin/umi2project.js"

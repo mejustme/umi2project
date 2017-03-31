@@ -150,6 +150,12 @@ var buildDesign =  function (obj) {
         var root = "module-" + obj.moduleName;
         fse.mkdirsSync(root + "/arch/design");
         fse.mkdirsSync(root + "/design");
+        if(!fs.existsSync(root + '/arch/umi.png')){
+            fse.copySync('./template/umi.png', root + '/arch/umi.png');
+            console.log("build " + root + "/arch/umi.png");
+        }else {
+            console.log("already exist "+ root + "/arch/umi.png");
+        }
         console.log("build " + root + "/arch/design");
         console.log("build " + root + "/design");
         return;
@@ -181,6 +187,24 @@ var buildDesignItem = function (umi, moduleName) {
             fse.outputFileSync(path, file);
         }else {
             console.log("already exist "+path);
+        }
+
+        // build sequence img
+        var moduleDesignImg = "module-"+ moduleName+ '/arch/design/' + imgName+  '.png';
+        if(!fs.existsSync(moduleDesignImg)){
+            console.log("build " + moduleDesignImg);
+            fse.copySync('./template/a-b.png', moduleDesignImg);
+        }else {
+            console.log("already exist " + moduleDesignImg);
+        }
+
+        // build module function img
+        var moduleFuntionImg = "module-"+ moduleName+ '/arch/f-' + imgName+  '.png';
+        if(!fs.existsSync(moduleFuntionImg)){
+            console.log("build " + moduleFuntionImg);
+            fse.copySync('./template/f-a-b.png', moduleFuntionImg);
+        }else {
+            console.log("already exist " + moduleFuntionImg);
         }
     });
 };

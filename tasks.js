@@ -131,6 +131,56 @@ var buildModuleConfig = function (tree) {
         fse.outputFileSync(path, file);
 
         console.log("build " + path);
+
+        buildRegistExport(tree)
+    })
+}
+
+// build regist and export module
+var buildRegistExport = function (tree) {
+    var path = "module-"+ tree.moduleName+ '/src/config.js';
+    readFile(path).then(function (file) {
+        // arr like 'module-column/src/layout/index.html'
+        var arr = file.match(/[^\s"]+index\.html(?=")/g);
+        for(var i=0; i<arr.length; i++){
+            buildRegistItem(arr[i].replace(/index\.html/,'index.js'), tree.moduleName);
+            buildExportHtmlItem(arr[i].replace(/index\.html/,'module.htm'), tree.moduleName);
+            buildExportJsItem(arr[i].replace(/index\.html/,'module.js'), tree.moduleName);
+        }
+    })
+}
+
+var getAlias = function (path, moduleName) {
+    var shotPath = path.match(/src(\/.+\/)/)[1];
+    var alias = shotPath.split('/').filter(function (value) {
+        if(value!=='') return true;
+    }).join('-');
+    return alias=='layout'? moduleName: alias;
+}
+// regist module item
+var buildRegistItem = function (path, moduleName) {
+    var alias = getAlias(path, moduleName);
+    readFile(path).then(function (file) {
+        fse.outputFileSync(path, file.replace("//m.regist('message');","m.regist('" +alias+ "')"));
+        console.log("regist in " + path);
+    })
+}
+
+// export module item whit html
+var buildExportHtmlItem = function (path, moduleName) {
+    var alias = getAlias(path, moduleName);
+    readFile(path).then(function (file) {
+        fse.outputFileSync(path, file.replace('Welcome to use NEJ UMI Module !!',"Welcome module-"+alias));
+        console.log("export html in " + path);
+    })
+}
+
+// export module item whit js
+var buildExportJsItem = function (path, moduleName) {
+    var alias = getAlias(path, moduleName);
+    readFile(path).then(function (file) {
+        // fse.outputFileSync(path, file);
+        console.log("export js in " + path);
     })
 }
 

@@ -47,7 +47,7 @@ module.exports = function () {
         // rule: http://knsv.github.io/mermaid/#installation
         buildUMI(tree)
 
-        // build module config for auto run all module
+        // build module config export regist for auto run all module
         buildModuleConfig(tree)
     });
 }

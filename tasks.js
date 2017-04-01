@@ -155,7 +155,7 @@ var getAlias = function (path, moduleName) {
     var alias = shotPath.split('/').filter(function (value) {
         if(value!=='') return true;
     }).join('-');
-    return alias=='layout'? moduleName: alias;
+    return alias=='layout'? moduleName: moduleName+'-'+alias;
 }
 // regist module item
 var buildRegistItem = function (path, moduleName) {
@@ -170,7 +170,7 @@ var buildRegistItem = function (path, moduleName) {
 var buildExportHtmlItem = function (path, moduleName) {
     var alias = getAlias(path, moduleName);
     readFile(path).then(function (file) {
-        fse.outputFileSync(path, file.replace('Welcome to use NEJ UMI Module !!',"Welcome module-"+alias));
+        fse.outputFileSync(path, file.replace('Welcome to use NEJ UMI Module !!',"Welcome to module "+alias));
         console.log("export html in " + path);
     })
 }

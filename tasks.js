@@ -143,9 +143,23 @@ var buildRegistExport = function (tree) {
         // arr like 'module-column/src/layout/index.html'
         var arr = file.match(/[^\s"]+index\.html(?=")/g);
         for(var i=0; i<arr.length; i++){
-            buildRegistItem(arr[i].replace(/index\.html/,'index.js'), tree.moduleName);
-            buildExportHtmlItem(arr[i].replace(/index\.html/,'module.htm'), tree.moduleName);
-            buildExportJsItem(arr[i].replace(/index\.html/,'module.js'), tree.moduleName);
+            var isParent = false;
+            var temp = arr[i].split('index.html')[0];
+            if(temp.indexOf('layout')!=-1){
+                isParent = tree;
+            }else {
+                for(var j=0; j<arr.length; j++){
+                    if(j==i) continue;
+                    if(arr[j].indexOf(temp)!=-1){
+                        isParent = tree;
+                        break;
+                    }
+                }
+            }
+
+            buildRegistItem(arr[i].replace(/index\.html/,'index.js'), tree.moduleName, isParent);
+            buildExportHtmlItem(arr[i].replace(/index\.html/,'module.htm'), tree.moduleName, isParent);
+            buildExportJsItem(arr[i].replace(/index\.html/,'module.js'), tree.moduleName, isParent);
         }
     })
 }
@@ -158,29 +172,55 @@ var getAlias = function (path, moduleName) {
     return alias=='layout'? moduleName: moduleName+'-'+alias;
 }
 // regist module item
-var buildRegistItem = function (path, moduleName) {
+var buildRegistItem = function (path, moduleName, isParent) {
     var alias = getAlias(path, moduleName);
     readFile(path).then(function (file) {
-        fse.outputFileSync(path, file.replace("//m.regist('message');","m.regist('" +alias+ "')"));
+        fse.outputFileSync(path, file.replace("m.regist('MODULE_ALIAS')","m.regist('" +alias+ "')"));
         console.log("regist in " + path);
     })
 }
 
 // export module item whit html
-var buildExportHtmlItem = function (path, moduleName) {
+var buildExportHtmlItem = function (path, moduleName, isParent) {
     var alias = getAlias(path, moduleName);
     readFile(path).then(function (file) {
-        fse.outputFileSync(path, file.replace('Welcome to use NEJ UMI Module !!',"Welcome to module "+alias));
-        console.log("export html in " + path);
+        if(isParent){
+            file = file.replace('<p>Welcome to use NEJ UMI Module !!</p>',function ($0) {
+                return $0 + '\n' + '    <div id="j-' +alias+ '-child"></div>';
+            })
+            console.log("export html in " + path);
+        }
+        file =  file.replace('Welcome to use NEJ UMI Module !!',"module "+alias)
+        fse.outputFileSync(path,file);
     })
 }
 
 // export module item whit js
-var buildExportJsItem = function (path, moduleName) {
+var buildExportJsItem = function (path, moduleName, isParent) {
     var alias = getAlias(path, moduleName);
     readFile(path).then(function (file) {
-        // fse.outputFileSync(path, file);
-        console.log("export js in " + path);
+        if(isParent){
+            file = file.replace('// EXPORTS_PARENT',
+                `this.__export = {
+            parent: "j-` + alias + `-child"
+        };`);
+            console.log("export js in " + path);
+        }
+
+        if(alias == moduleName){
+            // inject to body
+            file = file.replace(/pro\._doBuild(.+\r?\n.+)+};/,function ($0) {
+                return $0 + `
+
+    // todo repalce ftl 暴露的节点
+    pro.__doParseParent = function (){
+        return document.body;
+    }; `
+            })
+            console.log("inject root module in document.body " + path);
+        }
+        fse.outputFileSync(path,file);
+
     })
 }
 

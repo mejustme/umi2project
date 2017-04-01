@@ -1,4 +1,5 @@
 var fs         = require('fs');
+var fse        = require('fs-extra');
 var readFile   = require('./readFile');
 var parse2Tree = require('./parse2Tree');
 var traverse   = require('./traverse');
@@ -49,6 +50,11 @@ module.exports = function () {
 
         // build module config export regist for auto run all module
         buildModuleConfig(tree)
+
+        // copy config file to module
+        var configPath =  'module-' + tree.moduleName + '/config.json';
+        fse.copySync('./config.json', configPath);
+        console.log("copy config.json to" + configPath);
     });
 }
 

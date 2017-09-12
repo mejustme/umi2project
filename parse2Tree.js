@@ -2,7 +2,7 @@
 // 遍历树，找到父节点，如果孩子节点不存在，则插入孩子节点
 var traverseBuild = function (tree, parentName, newNode) {
     var i;
-    if(tree.name == parentName){
+    if(tree.umi == parentName){
         var exist = false;
         for(i=0; i<tree.children.length; i++){
             if(tree.children[i].name ==  newNode.name) exist = true;
@@ -22,14 +22,15 @@ var parse2Tree = function (data) {
     var parentName;
     var tree = {
         name: 'root',
-        children: []
+        children: [],
+        umi: '#/m'
     };
     if(!data.umi) return;
     var list = Object.keys(data.umi);
     list.forEach(function (value) {
         var items = value.replace(/#/g, '').split('/');
         var uis = data.umi[value];
-        parentName= 'root';
+        parentName= '#/m';
         items = items.filter(function (value) {
             if(value!=='') return true;
         });
@@ -45,7 +46,7 @@ var parse2Tree = function (data) {
                 umi: umi
             };
             traverseBuild (tree, parentName, newNode);
-            parentName = items[i];
+            parentName = umi;
         }
     });
     tree.children[0].moduleName = tree.children[0].name;

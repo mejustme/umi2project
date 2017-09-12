@@ -4,3 +4,4 @@ node_modules/
 npm-debug.log
 module-column/
 test.js
+module-cps/

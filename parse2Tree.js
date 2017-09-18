@@ -18,7 +18,7 @@ var traverseBuild = function (tree, parentName, newNode) {
 };
 
 // 解析配置
-var parse2Tree = function (data) {
+var parse2Tree = function (data, cmd) {
     var parentName;
     var tree = {
         name: 'root',
@@ -50,8 +50,9 @@ var parse2Tree = function (data) {
         }
     });
     tree.children[0].moduleName = tree.children[0].name;
-    tree.children[0].author = data.author;
-    tree.children[0].out = 'module-' + tree.children[0].name
+    tree.children[0].author  = data.author;
+    tree.children[0].dirName = cmd.params.moduleName?cmd.params.moduleName.replace(/module\-/g,""):tree.children[0].name;
+    tree.children[0].out = cmd.params.moduleName?cmd.params.moduleName:('module-' + tree.children[0].name);
     tree.children[0].uis =  data.components || [];
 
     //返回真正的路径树

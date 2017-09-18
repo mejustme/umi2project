@@ -33,19 +33,19 @@ ejs.filters.toPureUMI = function (umi) {
     return umi.split('#')[1];
 }
 
-ejs.filters.toModuleHtml = function (umi, moduleName) {
-    var path = umi.match(new RegExp(moduleName+'(.*)$'))[1];
+ejs.filters.toModuleHtml = function (umi, tree) {
+    var path = umi.match(new RegExp(tree.moduleName+'(.*)$'))[1];
     if(path === '/' || path === ''){  // for root
         path = '/layout/'
     }
     if(path[path.length-1]!= '/'){
         path = path + '/'
     }
-    return 'module-' + moduleName + '/src' + path + 'index.html';
+    return tree.out + '/src' + path + 'index.html';
 }
 
 ejs.filters.jump = function (umi) {
-    return umi.split("#")[1].split("/").join("")
+    return umi.split("#")[1].split("/").join("").toLowerCase();
 }
 
 ejs.filters.toBlank = function (indexFlag) {

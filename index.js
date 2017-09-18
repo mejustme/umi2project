@@ -1,5 +1,6 @@
 var fs         = require('fs');
 var fse        = require('fs-extra');
+var cmd        = require('./cmd');
 var readFile   = require('./readFile');
 var parse2Tree = require('./parse2Tree');
 var traverse   = require('./traverse');
@@ -13,15 +14,16 @@ var buildModuleConfig = tasks.buildModuleConfig;
 var buildUMI          = tasks.buildUMI;
 
 module.exports = function () {
-    readFile('./config.json').then(function (json) {
+    readFile(cmd.params.configPath).then(function (json) {
         var data = JSON.parse(json);
-        var tree = parse2Tree(data);
+        var tree = parse2Tree(data, cmd);
         // console.log(JSON.stringify(tree));
         if(!fs.existsSync(tree.out)){
             fs.mkdirSync(tree.out);
         }
         var obj = {
             tree: tree,
+            dirName: tree.dirName,
             moduleName: tree.moduleName,
             path: 'layout',
             author: tree.author || "hzchenqinhui@corp.netease.com",
@@ -52,8 +54,8 @@ module.exports = function () {
         buildModuleConfig(tree)
 
         // copy config file to module
-        var configPath =  'module-' + tree.moduleName + '/config.json';
-        fse.copySync('./config.json', configPath);
+        var configPath = tree.out + '/config.json';
+        fse.copySync(cmd.params.configPath, configPath);
         console.log("copy config.json to" + configPath);
     });
 }

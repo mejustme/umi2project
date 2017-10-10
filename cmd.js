@@ -4,15 +4,18 @@ var path = require('path');
 
 program
     .version('0.0.1')
-    .option('-mn, --moduleName', '指定模块名字')
-    .option('-cp, --configPath', '指定配置文件地址，默认是当前目录下')
+    .option('-m, --moduleName', '指定模块名字')
+    .option('-c, --configPath', '指定配置文件地址，默认是当前目录下')
     .parse(process.argv);
+
+var moduleName = argv.moduleName || argv.m;
+var configPath = argv.configPath || argv.c;
 
 module.exports = (function () {
     return {
         params: {
-            moduleName: argv.moduleName?argv.moduleName: null,
-            configPath: argv.configPath?path.resolve(process.cwd(), argv.configPath): "./config.json"
+            moduleName: moduleName?moduleName: null,
+            configPath: configPath?path.resolve(process.cwd(), configPath): "./config.json"
         }
     }
 })();

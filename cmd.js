@@ -1,15 +1,14 @@
 var program = require('commander');
-var argv = require('optimist').argv;
 var path = require('path');
 
 program
     .version('0.0.1')
-    .option('-m, --moduleName', '指定模块名字')
-    .option('-c, --configPath', '指定配置文件地址，默认是当前目录下')
+    .option('-m, --moduleName <moduleName>', '指定模块名字')
+    .option('-c, --configPath <configPath>', '指定配置文件地址，默认是当前目录下')
     .parse(process.argv);
 
-var moduleName = argv.moduleName || argv.m;
-var configPath = argv.configPath || argv.c;
+var moduleName = program.moduleName;
+var configPath = program.configPath;
 
 module.exports = (function () {
     return {

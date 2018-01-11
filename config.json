@@ -1,17 +1,12 @@
 {
-  "author": "hzchenqinhui@corp.netease.com",
-  "components": ["ux-a","ux-b","ux-c"],
+  "author": "mxx",
+  "components": [],
   "umi":{
-    "#/m/column/list": ["ux-1","ux-2"],
-    "#/m/column/create": ["ux-3","ux-4"],
-    "#/m/column/manage/edit": ["ux-5","ux-6"],
-    "#/m/column/manage/topbar": [],
-    "#/m/column/manage/topbar/info/": ["ux-7"],
-    "#/m/column/manage/topbar/list/": ["ux-8"],
-    "#/m/column/manage/topbar/draft/": ["ux-9","ux-10","ux-11"],
-    "#/m/column/admin/list/": [],
-    "#/m/column/admin/preview/": [],
-    "#/m/column/admin/unverify/column/": ["ux-12"],
-    "#/m/column/admin/verify/column/": ["ux-13","ux-14"]
+      "#/m/cps": [],
+      "#/m/cps/admin": [],
+      "#/m/cps/admin/Pomoter": [],
+      "#/m/cps/cp": [],
+      "#/m/cps/cp/Pomoter": [],
+      "#/m/cps/cp/Pomoter/list": ["ux-cp-promoter-search","ux-cp-promoter-list"]
   }
 }

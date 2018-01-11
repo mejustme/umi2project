@@ -14,7 +14,7 @@ var buildProject = function (obj) {
         if(obj.moduleName == obj.tree.name && obj.isRoot){
             runNei("moduleComponent", obj);
         }else {
-            var cwd = "module-"+obj.moduleName+"/src/"+obj.path+"/"+"component";
+            var cwd = "module-"+obj.dirName+"/src/"+obj.path+"/"+"component";
             // console.log(cwd);
             fse.mkdirsSync(cwd);
             obj.cwd = cwd;
@@ -24,7 +24,7 @@ var buildProject = function (obj) {
 };
 
 var runNei = function (type, obj) {
-    var cmd = "nei build -sk {type} -module {moduleName} -name {path} -author {author}";
+    var cmd = "nei build -sk {type} -module {dirName} -name {path} -author {author}";
     if(type != 'module'){
         cmd = cmd.replace(/path/, "uiName");
     }
@@ -38,9 +38,9 @@ var runNei = function (type, obj) {
 };
 
 // build design.md item
-var buildDesignItem = function (umi, moduleName) {
+var buildDesignItem = function (umi, moduleName, outPath) {
     var shotUmi = umi.match(new RegExp(moduleName+'(.*)$'))[1];
-    var mddir = "module-"+moduleName+"/design"+shotUmi;
+    var mddir = outPath+"/design"+shotUmi;
     if(mddir[mddir.length-1]!='/'){
         mddir = mddir+ '/';
     }
@@ -64,7 +64,7 @@ var buildDesignItem = function (umi, moduleName) {
         }
 
         // build sequence img
-        var moduleDesignImg = "module-"+ moduleName+ '/arch/design/' + imgName+  '.png';
+        var moduleDesignImg = outPath+ '/arch/design/' + imgName+  '.png';
         if(!fs.existsSync(moduleDesignImg)){
             console.log("build " + moduleDesignImg);
             fse.copySync(nodePath.resolve(__dirname,'./template/a-b.png'), moduleDesignImg);
@@ -73,7 +73,7 @@ var buildDesignItem = function (umi, moduleName) {
         }
 
         // build module function img
-        var moduleFuntionImg = "module-"+ moduleName+ '/arch/f-' + imgName+  '.png';
+        var moduleFuntionImg = outPath+ '/arch/f-' + imgName+  '.png';
         if(!fs.existsSync(moduleFuntionImg)){
             console.log("build " + moduleFuntionImg);
             fse.copySync(nodePath.resolve(__dirname,'./template/f-a-b.png'), moduleFuntionImg);
@@ -87,7 +87,7 @@ var buildDesignItem = function (umi, moduleName) {
 // build design
 var buildDesign =  function (obj) {
     if(obj.isRoot){
-        var root = "module-" + obj.moduleName;
+        var root = obj.out;
         fse.mkdirsSync(root + "/arch/design");
         fse.mkdirsSync(root + "/design");
         if(!fs.existsSync(root + '/arch/design/umi.png')){
@@ -100,7 +100,7 @@ var buildDesign =  function (obj) {
         console.log("build " + root + "/design");
         return;
     }
-    buildDesignItem(obj.tree.umi, obj.moduleName);
+    buildDesignItem(obj.tree.umi, obj.moduleName, obj.out);
 
 };
 
@@ -109,6 +109,7 @@ var buildReadme = function (tree) {
     readFile(nodePath.resolve(__dirname,'./template/README.ejs')).then(function (template) {
         var file = ejs.render(template, {
             tree: tree,
+            dirName: tree.dirName,
             moduleName: tree.moduleName
         });
         var path =  tree.out +'/README.md';
@@ -138,7 +139,7 @@ var buildModuleConfig = function (tree) {
 
 // build regist and export module
 var buildRegistExport = function (tree) {
-    var path = "module-"+ tree.moduleName+ '/src/config.js';
+    var path = tree.out+ '/src/config.js';
     readFile(path).then(function (file) {
         // arr like 'module-column/src/layout/index.html'
         var arr = file.match(/[^\s"]+index\.html(?=")/g);
@@ -210,13 +211,8 @@ var buildExportJsItem = function (path, moduleName, isParent) {
         if(alias == moduleName){
             // inject to body
             file = file.replace(/pro\._doBuild(.+\r?\n.+)+};/,function ($0) {
-                return $0 + `
-
-    // todo repalce ftl 暴露的节点
-    pro.__doParseParent = function (){
-        return document.body;
-    }; `
-            })
+                return $0;
+            });
             console.log("inject root module in document.body " + path);
         }
         fse.outputFileSync(path,file);

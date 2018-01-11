@@ -2,7 +2,7 @@
 // 遍历树，找到父节点，如果孩子节点不存在，则插入孩子节点
 var traverseBuild = function (tree, parentName, newNode) {
     var i;
-    if(tree.name == parentName){
+    if(tree.umi == parentName){
         var exist = false;
         for(i=0; i<tree.children.length; i++){
             if(tree.children[i].name ==  newNode.name) exist = true;
@@ -18,18 +18,19 @@ var traverseBuild = function (tree, parentName, newNode) {
 };
 
 // 解析配置
-var parse2Tree = function (data) {
+var parse2Tree = function (data, cmd) {
     var parentName;
     var tree = {
         name: 'root',
-        children: []
+        children: [],
+        umi: '#/m'
     };
     if(!data.umi) return;
     var list = Object.keys(data.umi);
     list.forEach(function (value) {
         var items = value.replace(/#/g, '').split('/');
         var uis = data.umi[value];
-        parentName= 'root';
+        parentName= '#/m';
         items = items.filter(function (value) {
             if(value!=='') return true;
         });
@@ -45,12 +46,13 @@ var parse2Tree = function (data) {
                 umi: umi
             };
             traverseBuild (tree, parentName, newNode);
-            parentName = items[i];
+            parentName = umi;
         }
     });
     tree.children[0].moduleName = tree.children[0].name;
-    tree.children[0].author = data.author;
-    tree.children[0].out = 'module-' + tree.children[0].name
+    tree.children[0].author  = data.author;
+    tree.children[0].dirName = cmd.params.moduleName?cmd.params.moduleName.replace(/module\-/g,""):tree.children[0].name;
+    tree.children[0].out = cmd.params.moduleName?cmd.params.moduleName:('module-' + tree.children[0].name);
     tree.children[0].uis =  data.components || [];
 
     //返回真正的路径树

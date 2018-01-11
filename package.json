@@ -1,6 +1,6 @@
 {
-  "name": "umi2project",
-  "version": "1.1.0",
+  "name": "umi2project2",
+  "version": "1.5.1",
   "description": "根据迭代-UIM的模块设计，以及netease nei规范自动生成完整的工程",
   "main": "index.js",
   "bin": {
@@ -26,7 +26,9 @@
   },
   "homepage": "https://github.com/mejustme/umi2project#readme",
   "dependencies": {
+    "commander": "^2.11.0",
     "ejs": "git+https://github.com/tj/ejs.git",
-    "fs-extra": "^2.1.2"
+    "fs-extra": "^2.1.2",
+    "optimist": "^0.6.1"
   }
 }

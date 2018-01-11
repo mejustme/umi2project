@@ -1,0 +1,13 @@
+//copy this to root config.js to verfiy the issue:#1
+{
+    "author": "hzchenbo2014",
+    "components": ["ux-cps-verify-detail","ux-cps-promoter-detail","ux-cps-promoter-detail-edit"],
+    "umi":{
+        "#/m/cps": [],
+        "#/m/cps/admin": [],
+        "#/m/cps/admin/promoter": [],
+        "#/m/cps/cp": [],
+        "#/m/cps/cp/promoter": [],
+        "#/m/cps/cp/promoter/list": ["ux-cp-promoter-search","ux-cp-promoter-list"]
+    }
+}

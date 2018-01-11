@@ -2,7 +2,7 @@
 
 ## 模块状态
 
-[![build status](https://g.hz.netease.com/edu-frontend/module-<%= moduleName %>/badges/master/build.svg)](https://g.hz.netease.com/edu-frontend/module-<%= moduleName %>/commits/master)
+[![build status](https://g.hz.netease.com/edu-frontend/module-<%= dirName %>/badges/master/build.svg)](https://g.hz.netease.com/edu-frontend/module-<%= dirName %>/commits/master)
 
 --------
 
@@ -12,7 +12,7 @@
 <% function catalogItem(tree, indexFlag) {
     if(indexFlag != 'root'){
 %>
-<%=: indexFlag | toBlank %>- [<%= tree.umi %>](#<%= indexFlag %>-<%=: tree.umi | jump %>)：[时序图设计](./design<%=: tree.umi | toMdPath:moduleName %>design.md)
+<%=: indexFlag | toBlank %>- [<%= tree.umi %>](#<%= indexFlag %>-<%=: tree.umi | jump %>)：:point_right: [时序图设计](./design<%=: tree.umi | toMdPath:moduleName %>design.md)
 <%
     }
         indexFlag = (indexFlag == 'root'? '': indexFlag);

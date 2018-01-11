@@ -16,12 +16,12 @@
 }
 %>
 <%# 生成module递归函数 -%>
-<% function buildModuleItem(tree) {
+<% function buildModuleItem(ctree) {
 %>
-            "<%=: tree.umi | toPureUMI -%>":  "<%=: tree.umi | toModuleHtml:moduleName -%>",
+            "<%=: ctree.umi | toPureUMI -%>":  "<%=: ctree.umi | toModuleHtml:tree -%>",
 <%
-    for(var i=0; i<tree.children.length; i++){
-        buildModuleItem(tree.children[i])
+    for(var i=0; i<ctree.children.length; i++){
+        buildModuleItem(ctree.children[i])
     }
 }
 %>
